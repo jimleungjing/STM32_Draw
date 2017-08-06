@@ -1,0 +1,74 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.22.0.0
+Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Jing Linkedin, NJU, LIC=HF8TG-VKVQ9-8W92D-8ZB1D-99MMN-F5GAG
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Professional  Version: 5.22
+Toolchain Path:  E:\Keil_V5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.22
+Dialog DLL:      DCM.DLL V1.13.9.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.21.0.0
+ 
+<h2>Project:</h2>
+H:\电设资料\2017夏训\ZGT\FreqCharaMeter\USER\LED.uvprojx
+Project File Date:  08/05/2017
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'E:\Keil_V5\ARM\ARMCC\Bin'
+Build target 'LED'
+compiling DAC8560_Driver.c...
+compiling main.c...
+compiling Relay.c...
+compiling pid.c...
+compiling lcd.c...
+..\HARDWARE\TFTLCD\lcd.c(3402): error:  #29: expected an expression
+  	}
+..\HARDWARE\TFTLCD\lcd.c(3402): error:  #165: too few arguments in function call
+  	}
+..\HARDWARE\TFTLCD\lcd.c(3402): error:  #18: expected a ")"
+  	}
+..\HARDWARE\TFTLCD\lcd.c(3402): error:  #65: expected a ";"
+  	}
+..\HARDWARE\TFTLCD\lcd.c(3405): error:  #20: identifier "x" is undefined
+  		Coordinate->YColorBar[ycnt]=LCD_ReadPoint(x,ycnt);		
+..\HARDWARE\TFTLCD\lcd.c: 0 warnings, 5 errors
+compiling stmflash.c...
+compiling KeyBoard.c...
+compiling PulseMeter.c...
+compiling usart.c...
+compiling GUITask.c...
+..\Task\GUITask.c(331): warning:  #174-D: expression has no effect
+  				CorrectionBreak: 
+_NOP;
+..\Task\GUITask.c(371): warning:  #174-D: expression has no effect
+  				CuttingOutBreak: 
+_NOP;
+..\Task\GUITask.c(527): warning:  #174-D: expression has no effect
+  				BreakFlag: 
+_NOP;
+..\Task\GUITask.c(287): warning:  #550-D: variable "BottomFreq"  was set but never used
+  	double BottomFreq=0;
+..\Task\GUITask.c: 4 warnings, 0 errors
+"..\OBJ\LED.axf" - 5 Error(s), 4 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  H:\电设资料\2017夏训\ZGT\FreqCharaMeter\USER\RTE\_LED
+  E:\Keil_V5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:16
+</pre>
+</body>
+</html>

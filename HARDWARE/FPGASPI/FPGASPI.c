@@ -1,0 +1,85 @@
+/*
+ * OrthogonalSquareWave.c
+ *
+ *  Created on: 2017年3月20日
+ *      Author: 99748
+ */
+#include "FPGASPI.h"
+#include "delay.h"
+
+u32 SPIWriteRead32Bits(u32 Data)
+{
+	u32 DataRead=0;
+	u32 DataSend=Data;
+	vu16 i=100;
+	FPGASPI_CS_H;
+	//while(i--);
+	delay_us(2);
+	FPGASPI_CS_L;
+	for(i=0;i<32;i++)
+	{
+		FPGASPI_SCLK_H;
+		delay_us(1);
+		if((DataSend<<i)&0x80000000)
+			FPGASPI_SDI_H;
+		else
+			FPGASPI_SDI_L;
+		delay_us(1);
+		DataRead=DataRead<<1;
+		FPGASPI_SCLK_L;
+		delay_us(1);
+		if(FPGASPI_SDO_IN==1)
+			DataRead|=0x00000001;
+		else
+			DataRead&=~0x00000001;
+		delay_us(1);
+	}
+	FPGASPI_CS_H;
+	FPGASPI_SDI_L;
+	return DataRead;
+}
+
+void FPGASPIPortInit()
+{
+	
+	GPIO_InitTypeDef  FPGASPI_GPIO[4];
+
+	RCC_AHB1PeriphClockCmd(FPGASPI_CS_RCC, ENABLE);
+	RCC_AHB1PeriphClockCmd(FPGASPI_SCLK_RCC, ENABLE);
+	RCC_AHB1PeriphClockCmd(FPGASPI_SDI_RCC, ENABLE);
+	RCC_AHB1PeriphClockCmd(FPGASPI_SDO_RCC, ENABLE);
+		
+	FPGASPI_GPIO[0].GPIO_Pin=FPGASPI_CS_Pin;
+	FPGASPI_GPIO[0].GPIO_Mode=GPIO_Mode_OUT;
+	FPGASPI_GPIO[0].GPIO_OType=GPIO_OType_PP;
+	FPGASPI_GPIO[0].GPIO_Speed=GPIO_Speed_50MHz;
+	FPGASPI_GPIO[0].GPIO_PuPd = GPIO_PuPd_UP;
+
+	FPGASPI_GPIO[1].GPIO_Pin=FPGASPI_SCLK_Pin;
+	FPGASPI_GPIO[1].GPIO_Mode=GPIO_Mode_OUT;
+	FPGASPI_GPIO[1].GPIO_OType=GPIO_OType_PP;
+	FPGASPI_GPIO[1].GPIO_Speed=GPIO_Speed_50MHz;
+	FPGASPI_GPIO[1].GPIO_PuPd = GPIO_PuPd_UP;
+
+	FPGASPI_GPIO[2].GPIO_Pin=FPGASPI_SDI_Pin;
+	FPGASPI_GPIO[2].GPIO_Mode=GPIO_Mode_OUT;
+	FPGASPI_GPIO[2].GPIO_OType=GPIO_OType_PP;
+	FPGASPI_GPIO[2].GPIO_Speed=GPIO_Speed_50MHz;
+	FPGASPI_GPIO[2].GPIO_PuPd = GPIO_PuPd_UP;
+	
+	FPGASPI_GPIO[3].GPIO_Pin=FPGASPI_SDO_Pin;
+	FPGASPI_GPIO[3].GPIO_Mode=GPIO_Mode_IN;
+	FPGASPI_GPIO[3].GPIO_Speed=GPIO_Speed_50MHz;
+	FPGASPI_GPIO[3].GPIO_PuPd = GPIO_PuPd_DOWN;
+	
+
+	GPIO_Init(FPGASPI_CS_GPIO, &FPGASPI_GPIO[0]);//初始化GPIO
+	GPIO_Init(FPGASPI_SCLK_GPIO, &FPGASPI_GPIO[1]);
+	GPIO_Init(FPGASPI_SDI_GPIO, &FPGASPI_GPIO[2]);
+	GPIO_Init(FPGASPI_SDO_GPIO, &FPGASPI_GPIO[3]);
+	
+	FPGASPI_CS_H;
+	FPGASPI_SCLK_L;
+	FPGASPI_SDI_L;
+}
+
